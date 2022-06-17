@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+    pytorch:
+        image: gan-cat
+        build:
+            context: .
+            dockerfile: Dockerfile
+
+        container_name: gan-cat_container
+        hostname: gan_cat_container
+
+        shm_size: '2gb'
+
+        stdin_open: true
+        tty: true
+
+        # expose:
+        #     - 9223
+        ports:
+            - "9223:9223"
+
+        volumes:
+            -   type: bind
+                source: ./
+                target: /workspace
+
+
+        # https://matsuand.github.io/docs.docker.jp.onthefly/compose/gpu-support/
+        # deploy:
+        #     resources:
+        #         reservations:
+        #             devices:
+        #             -   driver: nvidia
+        #                 device_ids: ['1','2']
+        #                 capabilities: [gpu]
